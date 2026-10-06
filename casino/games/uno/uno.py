@@ -159,10 +159,25 @@ def play_uno(ctx: GameContext) -> None:
                         break
 
             i.hand.remove(new_card)
+            i.cards_played += 1
+            if new_card.color == "wild":
+                i.wild_cards_played += 1
+            elif new_card.rank in ("draw_2", "skip", "reverse"):
+                i.special_cards_played += 1
             if len(i.hand) == 0:
                 continueGame = False
                 display_uno_topbar(ctx)
                 cprint(f"{i.name} is the winner!")
+
+                cprint("")
+                cprint("=" * 48)
+                cprint(f"{'Player':<10}{'Played':>8}{'Drawn':>8}{'Special':>9}{'Wilds':>7}{'Left':>6}")
+                cprint("-" * 48)
+                for p in players:
+                    cprint(f"{p.name[:10]:<10}{p.cards_played:>8}{p.cards_drawn:>8}{p.special_cards_played:>9}{p.wild_cards_played:>7}{len(p.hand):>6}")
+                cprint("=" * 48)
+                cprint("")
+
                 cinput("Press enter when ready to exit")
                 break
             match new_card.rank:
