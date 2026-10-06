@@ -16,6 +16,7 @@ class Player:
         c = random.choice(deck)
         self.hand.append(c)
         deck.remove(c)
+        self.cards_drawn += 1
         return c
     
     def play_card(self) -> UnoCard:

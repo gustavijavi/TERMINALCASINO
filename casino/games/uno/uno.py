@@ -159,6 +159,11 @@ def play_uno(ctx: GameContext) -> None:
                         break
 
             i.hand.remove(new_card)
+            i.cards_played += 1
+            if new_card.color == "wild":
+                i.wild_cards_played += 1
+            elif new_card.rank in ("draw_2", "skip", "reverse"):
+                i.special_played += 1
             if len(i.hand) == 0:
                 continueGame = False
                 display_uno_topbar(ctx)
